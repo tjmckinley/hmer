@@ -32,7 +32,7 @@ Proto_emulator <- R6::R6Class(
       if(args[1] != "x") stop("First argument to 'predict_func' must be 'x'")
       if(length(args) > 1) {
           argsOK <- args[-1] %in% names(self$add_args)
-          if(any(!argsOK)) stop(paste0("'predict_func' requires '", paste0(args[-1], collapse = ", "), "' objects to be passed to 'Proto_emulator'"))
+          if(any(!argsOK)) stop(paste0("'predict_func' requires missing '", paste0(args[-1][!argsOK], collapse = ", "), "' object(s) to be passed to 'Proto_emulator'"))
           tryCatch(
             do.call(predict_func, c(list(x = testPoint), self$add_args[match(args[-1], names(self$add_args))])),
             error = function(e) {
@@ -54,7 +54,7 @@ Proto_emulator <- R6::R6Class(
       if(args[1] != "x") stop("First argument to 'variance_func' must be 'x'")
       if(length(args) > 1) {
           argsOK <- args[-1] %in% names(self$add_args)
-          if(any(!argsOK)) stop(paste0("'variance_func' requires '", paste0(args[-1], collapse = ", "), "' objects to be passed to 'Proto_emulator'"))
+          if(any(!argsOK)) stop(paste0("'variance_func' requires missing '", paste0(args[-1][!argsOK], collapse = ", "), "' object(s) to be passed to 'Proto_emulator'"))
           tryCatch(
             do.call(variance_func, c(list(x = testPoint), self$add_args[match(args[-1], names(self$add_args))])),
             error = function(e) {
@@ -77,7 +77,7 @@ Proto_emulator <- R6::R6Class(
         if(!identical(args[1:3], c("x", "z", "cutoff"))) stop("First three arguments to 'implausibility_func' must be 'x', 'z' and 'cutoff'")
         if(length(args) > 3) {
           argsOK <- args[-c(1:3)] %in% names(self$add_args)
-          if(any(!argsOK)) stop(paste0("'implausibility_func' requires '", paste0(args[-1], collapse = ", "), "' objects to be passed to 'Proto_emulator'"))
+          if(any(!argsOK)) stop(paste0("'implausibility_func' requires missing '", paste0(args[-c(1:3)][!argsOK], collapse = ", "), "' object(s) to be passed to 'Proto_emulator'"))
         }
       }
       self$impf <- implausibility_func
@@ -86,7 +86,7 @@ Proto_emulator <- R6::R6Class(
         args <- formalArgs(print_func)
         if(!is.null(args)) {
           argsOK <- args[-c(1:3)] %in% names(self$add_args)
-          if(any(!argsOK)) stop(paste0("'print_func' requires '", paste0(args[-1], collapse = ", "), "' objects to be passed to 'Proto_emulator'"))
+          if(any(!argsOK)) stop(paste0("'print_func' requires missing '", paste0(args[-1][!argsOK], collapse = ", "), "' object(s) to be passed to 'Proto_emulator'"))
         }
       }
       self$printf <- print_func
