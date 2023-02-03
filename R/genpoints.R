@@ -398,7 +398,7 @@ generate_new_runs <- function(ems, n_points, z, method = "default", cutoff = 3,
   else {
     if (is.character(opts$accept_measure) && opts$accept_measure == "default") {
       point_imps <- imp_func(ems, plausible_set, z, max_imp = Inf, ordered = TRUE)
-      optimal_cut <- sort(point_imps)[min(length(point_imps)-1, floor(0.8*length(point_imps)), 5*length(ranges))]
+      optimal_cut <- sort(point_imps)[max(1, min(length(point_imps)-1, floor(0.8*length(point_imps)), 5*length(ranges)))]
       is_asymptoting <- (optimal_cut > cutoff && (optimal_cut - sort(point_imps)[1] < opts$cutoff_tolerance))
     }
     else {
